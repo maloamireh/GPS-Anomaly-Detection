@@ -7,3 +7,4 @@ Cameron: Run PCA on location07, select the filtered attributes and recompute on 
 Kelly: Hyperparameter optimization? Take out highly correlated features?
 <br>
 Riya: Run SVM on Keegan's dataset.
+Malak: Run PCA on highway06, attempt k means clustering on different locations and a correlation matrix in case PCA is non beneficial.
