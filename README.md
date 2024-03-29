@@ -6,3 +6,4 @@ Cameron: Run PCA on location07, select the filtered attributes and recompute on 
 <br>
 Kelly: Run PCA on Keegan's dataset. Input principle components into logostic regression. If the results are bad from this, then I may select the top feature from each component and run logistic regression on that.
 <br>
+Riya: Run SVM on Keegan's dataset.
