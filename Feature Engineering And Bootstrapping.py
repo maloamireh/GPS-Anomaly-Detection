@@ -1,8 +1,9 @@
 import numpy as np
 import pandas as pd
 
+filetoUse = 'avg_allAttribute_allLocation_agg.csv'  #I used the dataset I made before which had all trajectories as one row with all attributes to start, I included this csv in the github uplaod just in case
 #data init
-df = pd.read_csv('avg_allAttribute_allLocation_agg.csv')  # read in the aggregated csv, I included this in the github upload.
+df = pd.read_csv(filetoUse) 
 columnstokeep = ['vz_sd', 'z_sd', 've', 'vu', 'pitch', 'roll', 'yaw', 'qbn_3', 'attacked']  #culling features I've selected based on feature importance from xgboost on above dataset(feel free to change)
 df = df[columnstokeep]
 
@@ -26,10 +27,9 @@ def bootstrapGrounds(n_additional_rows, augment):
 
     if augment:
         columnstoAugment = ['vz_sd', 'z_sd', 've', 'vu', 'pitch', 'roll', 'yaw', 'qbn_3']
-        num_to_augment = 500
         noise_level = .1
         for attr in columnstoAugment:
-            bootstrapped_df[attr] = add_noise(bootstrapped_attacked_0[attr].iloc[1568:1568+num_to_augment], noise_level)
+            bootstrapped_df[attr] = add_noise(bootstrapped_attacked_0[attr], noise_level)
         bootstrapped_df.to_csv('avg_top10_augmented.csv', index=False)
 
 
