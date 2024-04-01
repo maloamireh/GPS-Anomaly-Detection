@@ -1,6 +1,6 @@
 #from imblearn.over_sampling import SMOTE
 from sklearn.datasets import load_iris
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, precision_score, f1_score, recall_score
 from sklearn.model_selection import train_test_split
 import xgboost as xgb
 import pandas as pd
@@ -83,7 +83,7 @@ def plot_learning_curves(X_train, y_train, X_test, y_test, model):
     plt.show()
 
 
-def printfinalAccuracies(X_train, y_train, X_test, y_test, model):
+def printfinalMetrics(X_train, y_train, X_test, y_test, model):
     # Assuming X_train, y_train are your training features and labels
     # Assuming X_test, y_test are your test features and labels
     # Assuming xgb_classifier is your trained XGBoost classifier
@@ -91,18 +91,31 @@ def printfinalAccuracies(X_train, y_train, X_test, y_test, model):
     # Train the classifier
     model.fit(X_train, y_train)
 
-    # Make predictions
+    # Make train predictions
     train_predictions = model.predict(X_train)
     train_accuracy = accuracy_score(y_train, train_predictions)
+    train_precision = precision_score(y_train, train_predictions)
+    train_recall = recall_score(y_train, train_predictions)
+    train_f1 = f1_score(y_train, train_predictions)
 
     # Make predictions
     test_predictions = model.predict(X_test)
     test_accuracy = accuracy_score(y_test, test_predictions)
+    test_precision = precision_score(y_test, test_predictions)
+    test_recall = recall_score(y_test, test_predictions)
+    test_f1 = f1_score(y_test, test_predictions)
+
 
     print("Train Accuracy:", train_accuracy)
-    print("Test Accuracy:", test_accuracy)
+    print("Train precision:", train_precision)
+    print("Train recall:", train_recall)
+    print("Train f1 score:", train_f1)
 
+    print("Test Accuracy:", test_accuracy)
+    print("test precision:", test_precision)
+    print("test recall:", test_recall)
+    print("test f1 score:", test_f1)
 
 plot_learning_curves(X_train_scaled, y_train, X_test_scaled, y_test, xgb_classifier)
-printfinalAccuracies(X_train_scaled, y_train, X_test_scaled, y_test, xgb_classifier)
+printfinalMetrics(X_train_scaled, y_train, X_test_scaled, y_test, xgb_classifier)
 #plot_feature_importance(X_train_scaled, y_train, xgb_classifier)
