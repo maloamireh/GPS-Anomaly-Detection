@@ -1,0 +1,18 @@
+def crossVal(classifier, X, y):
+    cv = KFold(n_splits=5, shuffle=True)
+    accuracy_scores = cross_val_score(xgb_classifier,X, y, cv=cv, scoring='accuracy')
+    recall_scores = cross_val_score(xgb_classifier, X, y, cv=cv, scoring='recall')
+    precision_scores = cross_val_score(xgb_classifier, X, y, cv=cv, scoring='precision')
+    f1_scores = cross_val_score(xgb_classifier, X, y, cv=cv, scoring='f1')
+    print("Mean Accuracy:", accuracy_scores.mean())
+    print("Standard Deviation of Accuracy:", accuracy_scores.std())
+
+    print("Mean Recall:", recall_scores.mean())
+    print("Standard Deviation of Recall:", recall_scores.std())
+
+    print("Mean Precision:", precision_scores.mean())
+    print("Standard Deviation of Precision:", precision_scores.std())
+
+    print("Mean f1-score:", f1_scores.mean())
+    print("Standard Deviation of f1-scores:", f1_scores.std())
+crossVal()
