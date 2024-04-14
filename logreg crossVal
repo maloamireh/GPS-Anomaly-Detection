@@ -1,0 +1,49 @@
+def crossVal(classifier, X, y):
+    cv = KFold(n_splits=5, shuffle=True)
+    accuracy_scores = cross_val_score(classifier,X, y, cv=cv, scoring='accuracy')
+    recall_scores = cross_val_score(classifier, X, y, cv=cv, scoring='recall')
+    precision_scores = cross_val_score(classifier, X, y, cv=cv, scoring='precision')
+    f1_scores = cross_val_score(classifier, X, y, cv=cv, scoring='f1')
+    print("Mean Accuracy:", accuracy_scores.mean())
+    print("Standard Deviation of Accuracy:", accuracy_scores.std())
+
+    print("Mean Recall:", recall_scores.mean())
+    print("Standard Deviation of Recall:", recall_scores.std())
+
+    print("Mean Precision:", precision_scores.mean())
+    print("Standard Deviation of Precision:", precision_scores.std())
+
+    print("Mean f1-score:", f1_scores.mean())
+    print("Standard Deviation of f1-scores:", f1_scores.std())
+
+#Normalize X
+scaler = StandardScaler()
+
+normalized_x = pd.DataFrame(scaler.fit_transform(X), columns = X.columns)
+
+# Define hyperparameters grid
+param_grid = {
+    'C': [0.001, 0.01, 0.1, 1, 10, 100, 1000],
+    "class_weight": [None, "balanced"]
+}
+
+# Create logistic regression model
+logreg = LogisticRegression()
+
+# Create GridSearchCV instance
+grid_search = GridSearchCV(estimator=logreg, param_grid=param_grid, cv=5, scoring='accuracy')
+
+# Fit the GridSearchCV to the data
+grid_search.fit(normalized_x, y)
+
+# Get the best parameters and best score
+best_params = grid_search.best_params_
+best_score = grid_search.best_score_
+
+#LogReg model with best params
+best_logreg = LogisticRegression(**best_params)
+
+crossVal(best_logreg, normalized_x, y)
+
+print(best_params)
+print(best_score)
